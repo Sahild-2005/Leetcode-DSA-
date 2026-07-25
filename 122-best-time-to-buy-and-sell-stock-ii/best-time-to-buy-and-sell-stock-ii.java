@@ -1,37 +1,26 @@
 class Solution {
-    // dp + memo
-    public int fun(int ind , int buy ,int[] arr,int[][] dp){
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
 
-        // base case 
+        int[][] dp = new int[n + 1][2];
 
-        if(ind==arr.length){
-            return 0;
+        // dp[n][0] = dp[n][1] = 0 (already initialized)
+
+        for (int ind = n - 1; ind >= 0; ind--) {
+
+            // buy == 1
+            dp[ind][1] = Math.max(
+                    -prices[ind] + dp[ind + 1][0], // Buy
+                    dp[ind + 1][1]                 // Skip
+            );
+
+            // buy == 0
+            dp[ind][0] = Math.max(
+                    prices[ind] + dp[ind + 1][1], // Sell
+                    dp[ind + 1][0]                // Hold
+            );
         }
-        if(dp[ind][buy]!=-1) return dp[ind][buy];
-        int profit =0;
-        if(buy==1){
-            // buy  1 --> yes 0--> no
-        profit = Math.max(-arr[ind]+fun(ind+1,0,arr,dp),
-                        0+ fun(ind+1,1,arr,dp));
-        }
-        else{
-                // sell
-                profit = Math.max(arr[ind]+fun(ind+1,1,arr,dp),
-                            0+fun(ind+1,0,arr,dp));
 
-        }
-
-        return dp[ind][buy] = profit ;
-    }
-
-    public int maxProfit(int[] arr) {
-        int[][] dp = new int[arr.length][2];
-
-        for(int i=0;i<dp.length;i++){
-            for(int j=0;j<dp[0].length;j++){
-                dp[i][j] = -1;
-            }
-        }
-        return fun(0, 1, arr,dp);
+        return dp[0][1];
     }
 }
