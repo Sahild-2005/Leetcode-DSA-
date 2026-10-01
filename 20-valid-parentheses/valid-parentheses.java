@@ -27,9 +27,9 @@ class Solution {
         }
 
         if(st.isEmpty()){
-            // if empty return true means balance 
+          
             return true;
         }
-      else  return false ; // if stack is not empty return false
+      else  return false ;
     }
 }
