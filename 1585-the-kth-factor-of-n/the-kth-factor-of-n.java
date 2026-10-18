@@ -5,6 +5,7 @@ class Solution {
 
         for(int i=1;i<=n;i++){
             if(n%i==0) list.add(i);
+            if(list.size()>k) break;
         }
 
         int size = list.size();
